@@ -6,7 +6,7 @@ function startTime() {
     var s = today.getSeconds();
     m =checkTime(m);
     s =checkTime(s);
-    document.getElementById("center")
+    document.getElementById("center");
     document.getElementById("center").innerHTML = h +":" + m + ":" + s;
     var t = setTimeout(startTime, 500);
 }
