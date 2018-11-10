@@ -1,32 +1,67 @@
-//this function targets the #center and changes the text to the current time.
-function startTime() {
-    var today = new Date();
-    var h = today.getHours();
-    var m = today.getMinutes();
-    var s = today.getSeconds();
-    m =checkTime(m);
-    s =checkTime(s);
-    document.getElementById("center");
-    document.getElementById("center").innerHTML = h +":" + m + ":" + s;
-    var t = setTimeout(startTime, 500);
+document.querySelector("body").onload = ()=> {
+    startTime()
+    getLocation()
+    showPosition()
 }
 
-function checkTime(i) {
-    if (i < 10) { i ="0" + i }  // add zero in front of numbers < 10
+const checkTime =(i) => {
+    if (i < 10) { 
+        i = 0 + i
+     }  // add zero in front of numbers < 10
     return i;
 }
 
-var today = new Date()   //This script says make today the new date 
-var curHr = today.getHours() //this says get the hourse of the new date
+var x = document.getElementById("demo");
 
-if (curHr < 12) { //if the current hour is less then 12, say good morning
-    document.body.background = "philly.jpg";
-    document.getElementById("greeting").innerHTML ="Good Morning";
-} else if (curHr < 18) { //else if the current hours is less than 18 say good afternoon
-    document.body.background = "nyc.jpg";
-    document.getElementById("greeting").innerHTML ="Good Afteroon";
-} else { //else after 24 hours say good evening.
-    document.body.background = "miami.jpg";
-    document.getElementById("greeting").innerHTML ="Good Evening";
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
 }
+
+function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;
+}
+
+
+
+const site = document.querySelector("html")
+const greetElement = document.querySelector("#greeting")
+
+const startTime = () => {
+    const today = new Date()
+    const hour = today.getHours()
+    let minute = today.getMinutes()
+    let seconds = today.getSeconds()
+    minute = checkTime(minute)
+
+    seconds = checkTime(seconds)
+        document.querySelector("#center").textContent = `${hour} : ${minute} : ${seconds}`
+
+        //This script says make today the new date 
+
+
+
+    if (hour < 12) { //if the current hour is less then 12, say good morning
+        site.style.backgroundImage = "url('philly.jpg')";
+        // document.body.background = "philly.jpg";
+        greetElement.textContent ="Good Morning";
+    } else if (hour < 18) { //else if the current hours is less than 18 say good afternoon
+        site.style.backgroundImage = "url('nyc.jpg')";
+       
+        greetElement.textContent ="Good Afteroon";
+    } else { //else after 24 hours say good evening.
+        site.style.backgroundImage = "url('miami.jpg')";
+        greetElement.textContent ="Good Evening";
+    }
+
+}
+window.setInterval(()=> {
+    startTime()
+},500)
+
+
 
